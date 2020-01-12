@@ -6,6 +6,10 @@ namespace TowerDefence.Level
 {
     public class Track : MonoBehaviour
     {
+        [SerializeField]
+        private Transform[] WayPoints;
+
+
     }
 }
 
