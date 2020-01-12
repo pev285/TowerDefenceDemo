@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TowerDefence
+namespace TowerDefence.Towers
 {
-	public interface IConfiguration 
+	public enum TowerType
 	{
-
-	
+		BasicTower,
 	} 
 } 
 

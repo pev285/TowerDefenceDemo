@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TowerDefence.Level;
 using UnityEngine;
@@ -6,11 +7,12 @@ using UnityEngine;
 
 namespace TowerDefence.Enemies
 {
-    public interface IEnemy
+    public interface IEnemy : IDisposable
     {
-        void StartMove(Track track);
+        void SetPosition(Vector3 position);
+        void SetRotation(Quaternion rotation);
 
-        void Dispose();
+        void StartMove(Track track);
     }
 }
 

@@ -9,13 +9,13 @@ namespace TowerDefence.Level
         [SerializeField]
         private Transform[] _wayPoints;
 
-        public Vector3 GetStartPosition()
-        {
-            if (_wayPoints.Length == 0)
-                return Vector3.zero;
+        //public Vector3 GetStartPosition()
+        //{
+        //    if (_wayPoints.Length == 0)
+        //        return Vector3.zero;
 
-            return _wayPoints[0].position;
-        }
+        //    return _wayPoints[0].position;
+        //}
 
         public IEnumerator<Vector3> GetEnumerator()
         {

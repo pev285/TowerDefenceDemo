@@ -15,12 +15,30 @@ namespace TowerDefence.Level
         [SerializeField]
         private Track[] _tracks;
 
-        public void StartSpawning(float waveInterval, float spawnInterval, int spread)
+        private float _waveInterval;
+        private float _spawnInterval;
+
+        private int _spread;
+
+        private Transform _transform;
+
+        private void Awake()
         {
-            StartCoroutine(WavesStarterCoroutine(waveInterval, spawnInterval, spread));
+            _transform = transform;
         }
 
-        public IEnumerator WavesStarterCoroutine(float waveInterval, float spawnInterval, int spread)
+        private void Start()
+        {
+            StartSpawning();
+        }
+
+        public void StartSpawning()
+        {
+            Configure();
+            StartCoroutine(WavesStarterCoroutine(_waveInterval, _spawnInterval, _spread));
+        }
+
+        private IEnumerator WavesStarterCoroutine(float waveInterval, float spawnInterval, int spread)
         {
             int waveNumber = 0;
             while (true)
@@ -30,21 +48,31 @@ namespace TowerDefence.Level
 
                 yield return StartCoroutine(WaveCoroutine(spawnInterval, enemiesCount));
                 yield return new WaitForSeconds(waveInterval);
+
+                UpdateEnemiesCharacteristics();
             }
         }
 
-        public IEnumerator WaveCoroutine(float spawnInterval, int count)
+        private IEnumerator WaveCoroutine(float spawnInterval, int count)
         {
             for (int i = 0; i < count; i++)
             {
-                var track = GetRandomTrack();
-                var enemy = _factory.GetEnemy();
+                IEnemy enemy = GetEnemy();
 
+                var track = GetRandomTrack();
                 enemy.StartMove(track);
 
-                if(i < count-1)
+                if (i < count - 1)
                     yield return new WaitForSeconds(spawnInterval);
             }
+        }
+
+        private IEnemy GetEnemy()
+        {
+            var enemy = _factory.GetEnemy();
+            enemy.SetPosition(_transform.position);
+            enemy.SetRotation(_transform.rotation);
+            return enemy;
         }
 
         private Track GetRandomTrack()
@@ -52,6 +80,23 @@ namespace TowerDefence.Level
             int index = UnityEngine.Random.Range(0, _tracks.Length);
             return _tracks[index];
         }
+
+        private void Configure()
+        {
+            var config = Root.Instance.Configuration.GetSpawnerConfiguration();
+
+            _waveInterval = config.WaveInterval;
+            _spawnInterval = config.SpawnInterval;
+
+            _spread = config.Spread;
+        }
+
+        private void UpdateEnemiesCharacteristics()
+        {
+            //--- TODO --- !!!!!!!!!!!!!!!!!!!!!!!
+        }
+
+
     }
 }
 

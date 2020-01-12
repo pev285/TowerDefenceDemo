@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TowerDefence.Configuration;
 using UnityEngine;
 
 namespace TowerDefence
@@ -13,7 +14,7 @@ namespace TowerDefence
 			get
 			{
 				if (_configuration == null)
-					_configuration = new Configuration();
+					_configuration = new DebugConfiguration();
 
 				return _configuration;
 			}

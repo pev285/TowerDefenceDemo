@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TowerDefence
+namespace TowerDefence.Configuration
 {
-	public class Configuration : IConfiguration
+	public class TowerConfiguration 
 	{
 
 	

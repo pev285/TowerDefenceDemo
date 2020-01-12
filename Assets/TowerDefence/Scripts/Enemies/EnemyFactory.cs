@@ -13,7 +13,8 @@ namespace TowerDefence.Enemies
 
         public IEnemy GetEnemy()
         {
-            throw new NotImplementedException();
+            var go = Instantiate(_enemyPrefabs[0]);
+            return go.GetComponent<IEnemy>();
         }
     }
 }
