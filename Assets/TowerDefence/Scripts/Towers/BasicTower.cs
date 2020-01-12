@@ -7,6 +7,14 @@ namespace TowerDefence.Towers
 {
     public class BasicTower : MonoBehaviour, ITower
     {
+        private float _fireInterval;
+
+        private void Start()
+        {
+            var config = Root.Instance.Configuration;
+
+        }
+
     }
 }
 
