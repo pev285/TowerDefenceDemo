@@ -6,12 +6,10 @@ using UnityEngine;
 namespace TowerDefence.Configuration
 {
 	[Serializable]
-	public class SpawnerConfiguration : MonoBehaviour 
+	public class StrongholdConfiguration 	
 	{
-		public float WaveInterval;
-		public float SpawnInterval;
-
-		public int Spread;
+		public int StartGold;
+		public int StartHealth;
 	} 
 } 
 

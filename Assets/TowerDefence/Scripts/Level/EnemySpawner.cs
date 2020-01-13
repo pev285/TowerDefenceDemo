@@ -46,18 +46,19 @@ namespace TowerDefence.Level
                 waveNumber++;
                 var enemiesCount = UnityEngine.Random.Range(waveNumber, waveNumber + spread + 1);
 
-                yield return StartCoroutine(WaveCoroutine(spawnInterval, enemiesCount));
+                yield return StartCoroutine(WaveCoroutine(waveNumber, spawnInterval, enemiesCount));
                 yield return new WaitForSeconds(waveInterval);
 
                 UpdateEnemiesCharacteristics();
             }
         }
 
-        private IEnumerator WaveCoroutine(float spawnInterval, int count)
+        private IEnumerator WaveCoroutine(int waveNumber, float spawnInterval, int count)
         {
             for (int i = 0; i < count; i++)
             {
                 IEnemy enemy = GetEnemy();
+                enemy.SetLevel(waveNumber-1);
 
                 var track = GetRandomTrack();
                 enemy.StartMove(track);

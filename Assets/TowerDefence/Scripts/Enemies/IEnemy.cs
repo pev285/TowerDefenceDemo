@@ -12,6 +12,7 @@ namespace TowerDefence.Enemies
         void SetPosition(Vector3 position);
         void SetRotation(Quaternion rotation);
 
+        void SetLevel(int number);
         void StartMove(Track track);
     }
 }

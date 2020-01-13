@@ -6,25 +6,21 @@ using UnityEngine;
 
 namespace TowerDefence.Configuration
 {
-	public class DebugConfiguration : IConfiguration
+	public class DebugConfiguration : OverallConfiguration
 	{
-		private EnemyConfiguration _enemy;
-		private TowerConfiguration _tower;
-
-		private SpawnerConfiguration _spawner;
 
 		public DebugConfiguration()
 		{
 			//--- TODO: Real implementation using reading a file ---
 
-			_spawner = new SpawnerConfiguration
+			SpawnerConfig = new SpawnerConfiguration
 			{
 				WaveInterval = 3f,
 				SpawnInterval = 0.5f,
 				Spread = 2
 			};
 
-			_enemy = new EnemyConfiguration
+			EnemyConfig = new EnemyConfiguration
 			{
 				Health = 10,
 				Damage = 2,
@@ -33,23 +29,24 @@ namespace TowerDefence.Configuration
 				RotationSpeed = 360f
 			};
 
-			_tower = new TowerConfiguration();
+			TowerConfig = new TowerConfiguration
+			{
+				Damage = 1,
+				Frequency = 1f,
+
+				DamagePerLevel = 1,
+				FrequencyPerLevel = 1f,
+
+				UpgradePricePerLevel = 50,
+			};
+
+			StrongholdConfig = new StrongholdConfiguration
+			{
+				StartGold = 100,
+				StartHealth = 10
+			};
 		}
 
-		public EnemyConfiguration GetEnemyConfiguration(EnemyType type)
-		{
-			return _enemy;
-		}
-
-		public SpawnerConfiguration GetSpawnerConfiguration()
-		{
-			return _spawner;
-		}
-
-		public TowerConfiguration GetTowerConfiguration(TowerType type)
-		{
-			return _tower;
-		}
 	}
 } 
 

@@ -12,12 +12,17 @@ namespace TowerDefence.Enemies
         private Transform _transform;
         private Coroutine _rotationCoroutine;
 
-        //[SerializeField]
-        //private Track _debugTrack;
-
         private int _health;
         private int _damage;
         private int _reward;
+
+        private int _startHealth;
+        private int _startDamage;
+        private int _startReward;
+
+        private int _healthPerLevelIncrement;
+        private int _damagePerLevelIncrement;
+        private int _rewardPerLevelIncrement;
 
         private float _moveSpeed;
         private float _rotationSpeed;
@@ -27,11 +32,6 @@ namespace TowerDefence.Enemies
             _transform = transform;
         }
 
-        //private void Start()
-        //{
-        //    StartMove(_debugTrack);
-        //}
-
         public void Configure()
         {
             var config = Root.Instance.Configuration.GetEnemyConfiguration(EnemyType.BasicEnemy);
@@ -39,6 +39,14 @@ namespace TowerDefence.Enemies
             _health = config.Health;
             _damage = config.Damage;
             _reward = config.Reward;
+
+            _startHealth = _health;
+            _startDamage = _damage;
+            _startReward = _reward;
+
+            _healthPerLevelIncrement = config.HealthPerLevelIncrement;
+            _damagePerLevelIncrement = config.DamagePerLevelIncrement;
+            _rewardPerLevelIncrement = config.DamagePerLevelIncrement;
 
             _moveSpeed = config.MoveSpeed;
             _rotationSpeed = config.RotationSpeed;
@@ -91,7 +99,6 @@ namespace TowerDefence.Enemies
 
         private IEnumerator MoveToCoroutine(Vector3 target)
         {
-
             do
             {
                 var position = _transform.position;
@@ -116,7 +123,7 @@ namespace TowerDefence.Enemies
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Destroy(gameObject);
         }
 
         public void SetPosition(Vector3 position)
@@ -127,6 +134,13 @@ namespace TowerDefence.Enemies
         public void SetRotation(Quaternion rotation)
         {
             _transform.rotation = rotation;
+        }
+
+        public void SetLevel(int level)
+        {
+            _health = _startHealth + level * _healthPerLevelIncrement;
+            _damage = _startDamage + level * _damagePerLevelIncrement;
+            _reward = _startReward + level * _rewardPerLevelIncrement;
         }
     }
 }

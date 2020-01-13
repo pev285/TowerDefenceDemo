@@ -12,6 +12,7 @@ namespace TowerDefence.Configuration
 		TowerConfiguration GetTowerConfiguration(TowerType type);
 	
 		SpawnerConfiguration GetSpawnerConfiguration();
+		StrongholdConfiguration GetStrongholdConfiguration();
 	} 
 } 
 

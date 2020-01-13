@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TowerDefence.Configuration;
+using TowerDefence.Configuration.Json;
 using UnityEngine;
 
 namespace TowerDefence
@@ -14,6 +15,7 @@ namespace TowerDefence
 			get
 			{
 				if (_configuration == null)
+					//_configuration = JsonConfigLoader.Load(JsonConfigPath.FilePath);
 					_configuration = new DebugConfiguration();
 
 				return _configuration;
