@@ -9,6 +9,8 @@ namespace TowerDefence.Level
 {
     public class EnemySpawner : MonoBehaviour
     {
+        public event Action<IEnemy> EnemyCreated = (e) => { };
+
         [SerializeField]
         private EnemyFactory _factory;
 
@@ -59,6 +61,8 @@ namespace TowerDefence.Level
             {
                 IEnemy enemy = GetEnemy();
                 enemy.SetLevel(waveNumber-1);
+
+                EnemyCreated(enemy);
 
                 var track = GetRandomTrack();
                 enemy.StartMove(track);

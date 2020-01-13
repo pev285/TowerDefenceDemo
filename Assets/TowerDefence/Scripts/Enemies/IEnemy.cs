@@ -9,6 +9,9 @@ namespace TowerDefence.Enemies
 {
     public interface IEnemy : IDisposable
     {
+        Vector3 GetPosition();
+        void ApplyDamage(float amount);
+
         void SetPosition(Vector3 position);
         void SetRotation(Quaternion rotation);
 

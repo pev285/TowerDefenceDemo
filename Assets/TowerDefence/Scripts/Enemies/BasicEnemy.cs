@@ -10,6 +10,8 @@ namespace TowerDefence.Enemies
 {
     public class BasicEnemy : MonoBehaviour, IEnemy
     {
+        public event Action Died = () => { };
+
         private Transform _transform;
         private Coroutine _rotationCoroutine;
 
@@ -137,6 +139,19 @@ namespace TowerDefence.Enemies
         public int GetReward()
         {
             return _reward;
+        }
+
+        public Vector3 GetPosition()
+        {
+            return _transform.position;
+        }
+
+        public void ApplyDamage(float amount)
+        {
+            _health -= amount;
+
+            if (_health <= 0)
+                Died();
         }
     }
 }
