@@ -14,6 +14,9 @@ namespace TowerDefence.Enemies
 
         void SetLevel(int number);
         void StartMove(Track track);
+
+        int GetDamage();
+        int GetReward();
     }
 }
 

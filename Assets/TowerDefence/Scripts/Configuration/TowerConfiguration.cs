@@ -6,8 +6,9 @@ using UnityEngine;
 namespace TowerDefence.Configuration
 {
 	[Serializable]
-	public class TowerConfiguration 
+	public struct TowerConfiguration 
 	{
+		public float Range;
 		public float Damage;
 		public float Frequency;
 
@@ -15,8 +16,9 @@ namespace TowerDefence.Configuration
 		public int UpgradePricePerLevel;
 
 		[Space(10)]
-		public float DamagePerLevel;
-		public float FrequencyPerLevel;
+		public float RangePerLevelIncrement;
+		public float DamagePerLevelIncrement;
+		public float FrequencyPerLevelIncrement;
 	} 
 } 
 

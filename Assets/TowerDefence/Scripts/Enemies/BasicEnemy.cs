@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TowerDefence.Configuration;
 using TowerDefence.Level;
 using UnityEngine;
 
@@ -12,17 +13,12 @@ namespace TowerDefence.Enemies
         private Transform _transform;
         private Coroutine _rotationCoroutine;
 
-        private int _health;
+        private int _level;
+        //private EnemyConfiguration _config;
+
         private int _damage;
         private int _reward;
-
-        private int _startHealth;
-        private int _startDamage;
-        private int _startReward;
-
-        private int _healthPerLevelIncrement;
-        private int _damagePerLevelIncrement;
-        private int _rewardPerLevelIncrement;
+        private float _health;
 
         private float _moveSpeed;
         private float _rotationSpeed;
@@ -32,24 +28,9 @@ namespace TowerDefence.Enemies
             _transform = transform;
         }
 
-        public void Configure()
+        public void Dispose()
         {
-            var config = Root.Instance.Configuration.GetEnemyConfiguration(EnemyType.BasicEnemy);
-
-            _health = config.Health;
-            _damage = config.Damage;
-            _reward = config.Reward;
-
-            _startHealth = _health;
-            _startDamage = _damage;
-            _startReward = _reward;
-
-            _healthPerLevelIncrement = config.HealthPerLevelIncrement;
-            _damagePerLevelIncrement = config.DamagePerLevelIncrement;
-            _rewardPerLevelIncrement = config.DamagePerLevelIncrement;
-
-            _moveSpeed = config.MoveSpeed;
-            _rotationSpeed = config.RotationSpeed;
+            Destroy(gameObject);
         }
 
         public void StartMove(Track track)
@@ -57,6 +38,18 @@ namespace TowerDefence.Enemies
             Configure();
             StartCoroutine(MoveCoroutine(track));
         }
+        private void Configure()
+        {
+            var config = Root.Instance.Configuration.GetEnemyConfiguration(EnemyType.BasicEnemy);
+
+            _damage = config.Damage + _level * config.DamagePerLevelIncrement;
+            _reward = config.Reward + _level * config.RewardPerLevelIncrement;
+            _health = config.Health + _level * config.HealthPerLevelIncrement;
+
+            _moveSpeed = config.MoveSpeed + _level * config.MoveSpeedPerLevelIncrement;
+            _rotationSpeed = config.RotationSpeed + _level * config.RotationSpeedPerLevelIncrement;
+        }
+
 
         private IEnumerator MoveCoroutine(Track track)
         {
@@ -64,7 +57,7 @@ namespace TowerDefence.Enemies
             {
                 _rotationCoroutine = StartCoroutine(RotateToCoroutine(pos));
 
-                //yield return _rotationCoroutine;
+                //yield return _rotationCoroutine; //-- To wait for rotation --
                 yield return StartCoroutine(MoveToCoroutine(pos));
             }
         }
@@ -121,11 +114,6 @@ namespace TowerDefence.Enemies
             StopCoroutine(_rotationCoroutine);
         }
 
-        public void Dispose()
-        {
-            Destroy(gameObject);
-        }
-
         public void SetPosition(Vector3 position)
         {
             _transform.position = position;
@@ -138,9 +126,17 @@ namespace TowerDefence.Enemies
 
         public void SetLevel(int level)
         {
-            _health = _startHealth + level * _healthPerLevelIncrement;
-            _damage = _startDamage + level * _damagePerLevelIncrement;
-            _reward = _startReward + level * _rewardPerLevelIncrement;
+            _level = level;
+        }
+
+        public int GetDamage()
+        {
+            return _damage;
+        }
+
+        public int GetReward()
+        {
+            return _reward;
         }
     }
 }

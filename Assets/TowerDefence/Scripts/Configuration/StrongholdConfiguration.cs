@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TowerDefence.Configuration
 {
 	[Serializable]
-	public class StrongholdConfiguration 	
+	public struct StrongholdConfiguration 	
 	{
 		public int StartGold;
 		public int StartHealth;

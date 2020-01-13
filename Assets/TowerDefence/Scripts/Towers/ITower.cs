@@ -7,6 +7,7 @@ namespace TowerDefence.Towers
 {
     public interface ITower
     {
+        void Upgrade();
     }
 }
 

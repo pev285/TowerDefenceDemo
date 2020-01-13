@@ -26,7 +26,10 @@ namespace TowerDefence.Configuration
 				Damage = 2,
 				Reward = 5,
 				MoveSpeed = 3f,
-				RotationSpeed = 360f
+				RotationSpeed = 360f,
+
+				MoveSpeedPerLevelIncrement = 0.2f,
+				RotationSpeedPerLevelIncrement = 90,
 			};
 
 			TowerConfig = new TowerConfiguration
@@ -34,8 +37,8 @@ namespace TowerDefence.Configuration
 				Damage = 1,
 				Frequency = 1f,
 
-				DamagePerLevel = 1,
-				FrequencyPerLevel = 1f,
+				DamagePerLevelIncrement = 1,
+				FrequencyPerLevelIncrement = 1f,
 
 				UpgradePricePerLevel = 50,
 			};

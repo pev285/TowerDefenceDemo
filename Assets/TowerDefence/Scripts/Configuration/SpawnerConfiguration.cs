@@ -6,7 +6,7 @@ using UnityEngine;
 namespace TowerDefence.Configuration
 {
 	[Serializable]
-	public class SpawnerConfiguration : MonoBehaviour 
+	public struct SpawnerConfiguration
 	{
 		public float WaveInterval;
 		public float SpawnInterval;
