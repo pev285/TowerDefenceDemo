@@ -34,9 +34,11 @@ namespace TowerDefence.Configuration
 
 			TowerConfig = new TowerConfiguration
 			{
+				Range = 4f,
 				Damage = 1,
 				Frequency = 1f,
 
+				RangePerLevelIncrement = 1f,
 				DamagePerLevelIncrement = 1,
 				FrequencyPerLevelIncrement = 1f,
 

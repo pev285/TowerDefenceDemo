@@ -27,10 +27,10 @@ namespace TowerDefence.Level
             _transform = transform;
         }
 
-        private void Start()
-        {
-            StartSpawning();
-        }
+        //private void Start()
+        //{
+        //    StartSpawning();
+        //}
 
         public void StartSpawning()
         {

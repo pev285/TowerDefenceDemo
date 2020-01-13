@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TowerDefence
 {
-	public class CompositionRoot : MonoBehaviour, IRoot
+	public class CompositionRoot :/* MonoBehaviour, */IRoot
 	{
 		private IConfiguration _configuration;
 		public IConfiguration Configuration

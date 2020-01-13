@@ -13,17 +13,23 @@ namespace TowerDefence
         {
             get
             {
-                if (_instance == null)
-                    _instance = CreateInstance();
+                //if (_instance == null)
+                //    _instance = CreateInstance();
 
                 return _instance;
             }
         }
 
+        public static void SetInstance(IRoot instance)
+        {
+            _instance = instance;
+        }
+
         private static IRoot CreateInstance()
         {
-            var go = new GameObject("CompositionRoot");
-            return go.AddComponent<CompositionRoot>();
+            return new CompositionRoot();
+            //var go = new GameObject("CompositionRoot");
+            //return go.AddComponent<CompositionRoot>();
         }
     }
 }

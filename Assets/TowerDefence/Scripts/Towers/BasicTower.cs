@@ -21,7 +21,7 @@ namespace TowerDefence.Towers
         private void Start()
         {
             _level = 0;
-            _isActivated = false;
+            Activate();
         }
 
         private void Update()
@@ -32,10 +32,15 @@ namespace TowerDefence.Towers
             //--- Fire ---
         }
 
-        public void StartFire()
+        public void Activate()
         {
             Configure();
             _isActivated = true;
+        }
+
+        public void Deactivate()
+        {
+            _isActivated = false;
         }
 
         public void Upgrade()
@@ -54,6 +59,12 @@ namespace TowerDefence.Towers
         }
 
 
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, _range);
+        }
 
     }
 }
