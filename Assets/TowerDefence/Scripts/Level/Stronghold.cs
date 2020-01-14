@@ -17,6 +17,12 @@ namespace TowerDefence.Level
             Deactivate();
         }
 
+        private void Start()
+        {
+            Root.Instance.PlayGame += Activate;
+            Root.Instance.StopGame += Deactivate;
+        }
+
         public void Activate()
         {
             _isActivated = true;

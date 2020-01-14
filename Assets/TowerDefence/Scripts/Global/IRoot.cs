@@ -16,9 +16,11 @@ namespace TowerDefence
 		event Action<int> GoldChanged;
 		event Action<int> HealthChanged;
 
+		event Action PlayGame;
+		event Action StopGame;
+
 		IGameContext Context { get; }
 		IConfiguration Configuration { get; }
-	
 	} 
 } 
 

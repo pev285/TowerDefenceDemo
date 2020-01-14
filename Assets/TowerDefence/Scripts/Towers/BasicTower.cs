@@ -36,12 +36,16 @@ namespace TowerDefence.Towers
         private void Awake()
         {
             _laserBeam.positionCount = 0;
+
+            Deactivate();
         }
 
         private void Start()
         {
+            Root.Instance.PlayGame += Activate;
+            Root.Instance.StopGame += Deactivate;
+
             _level = 0;
-            Activate();
         }
 
         private void Update()

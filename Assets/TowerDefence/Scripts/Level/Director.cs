@@ -32,27 +32,11 @@ namespace TowerDefence.Level
 			Subscribe();
 		}
 
-		private void ConfigureComposition()
-		{
-			_compositionRoot = new CompositionRoot();
-			Root.SetInstance(_compositionRoot);
-		}
-
-		private void ConfigureContext()
-		{
-			_context.EnemiesDefeated = 0;
-			var config = Root.Instance.Configuration.GetStrongholdConfiguration();
-
-			_context.Gold = config.StartGold;
-			_context.Health = config.StartHealth;
-		}
-
 		private void Start()
 		{
 			ConfigureContext();
 
-			_spawner.Activate();
-			_stronghold.Activate();
+			_compositionRoot.InvokePlayGame();
 		}
 
 		private void OnDestroy()
@@ -92,6 +76,22 @@ namespace TowerDefence.Level
 			_compositionRoot.ObtainContext -= GetContext;
 		}
 
+
+		private void ConfigureComposition()
+		{
+			_compositionRoot = new CompositionRoot();
+			Root.SetInstance(_compositionRoot);
+		}
+
+		private void ConfigureContext()
+		{
+			_context.EnemiesDefeated = 0;
+			var config = Root.Instance.Configuration.GetStrongholdConfiguration();
+
+			_context.Gold = config.StartGold;
+			_context.Health = config.StartHealth;
+		}
+
 		private IGameContext GetContext()
 		{
 			return _context;
@@ -114,8 +114,7 @@ namespace TowerDefence.Level
 
 		private void StopGame()
 		{
-			_spawner.Deactivate();
-			_stronghold.Deactivate();
+			_compositionRoot.InvokeStopGame();
 		}
 
 		private void PassAlongStrongholdGoldChanged(int gold)

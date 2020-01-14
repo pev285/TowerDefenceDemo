@@ -27,13 +27,15 @@ namespace TowerDefence.Level
 
         private void Awake()
         {
+            Deactivate();
             _transform = transform;
         }
 
-        //private void Start()
-        //{
-        //    StartSpawning();
-        //}
+        private void Start()
+        {
+            Root.Instance.PlayGame += Activate;
+            Root.Instance.StopGame += Deactivate;
+        }
 
         public void Activate()
         {
@@ -41,10 +43,10 @@ namespace TowerDefence.Level
             _spawningCoroutine = StartCoroutine(WavesStarterCoroutine(_waveInterval, _spawnInterval, _spread));
         }
 
-
         public void Deactivate()
         {
-            StopCoroutine(_spawningCoroutine);
+            if (_spawningCoroutine != null)
+                StopCoroutine(_spawningCoroutine);
         }
 
         private IEnumerator WavesStarterCoroutine(float waveInterval, float spawnInterval, int spread)

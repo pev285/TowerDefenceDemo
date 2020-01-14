@@ -34,9 +34,21 @@ namespace TowerDefence.Enemies
         private float _moveSpeed;
         private float _rotationSpeed;
 
+        private Coroutine _moveCoroutine;
+
         private void Awake()
         {
             _transform = transform;
+        }
+
+        private void Start()
+        {
+            Root.Instance.StopGame += Deactivate;
+        }
+
+        private void OnDestroy()
+        {
+            Root.Instance.StopGame -= Deactivate;
         }
 
         public void Dispose()
@@ -44,11 +56,58 @@ namespace TowerDefence.Enemies
             Destroy(gameObject);
         }
 
+        public void SetPosition(Vector3 position)
+        {
+            _transform.position = position;
+        }
+
+        public void SetRotation(Quaternion rotation)
+        {
+            _transform.rotation = rotation;
+        }
+
+        public void SetLevel(int level)
+        {
+            _level = level;
+        }
+
+        public int GetDamage()
+        {
+            return _damage;
+        }
+
+        public int GetReward()
+        {
+            return _reward;
+        }
+
+        public Vector3 GetPosition()
+        {
+            return _transform.position;
+        }
+
+        public void ApplyDamage(float amount)
+        {
+            _health -= amount;
+
+            if (_health <= 0)
+                Died(this);
+        }
+
+
         public void StartMove(Track track)
         {
             Configure();
-            StartCoroutine(MoveCoroutine(track));
+            _moveCoroutine = StartCoroutine(MoveCoroutine(track));
         }
+
+
+        private void Deactivate()
+        {
+            if (_moveCoroutine != null)
+                StopCoroutine(_moveCoroutine);
+        }
+
         private void Configure()
         {
             var config = Root.Instance.Configuration.GetEnemyConfiguration(EnemyType.BasicEnemy);
@@ -64,7 +123,7 @@ namespace TowerDefence.Enemies
 
         private IEnumerator MoveCoroutine(Track track)
         {
-            foreach(var pos in track)
+            foreach (var pos in track)
             {
                 _rotationCoroutine = StartCoroutine(RotateToCoroutine(pos));
 
@@ -97,7 +156,7 @@ namespace TowerDefence.Enemies
                 _transform.rotation = Quaternion.RotateTowards(rotation, targetRotation, maxDegrees);
 
                 yield return null;
-            } 
+            }
             while (true);
         }
 
@@ -118,53 +177,15 @@ namespace TowerDefence.Enemies
                 _transform.position = position + direction * maxStep;
 
                 yield return null;
-            } 
+            }
             while (true);
 
             _transform.position = target;
-            StopCoroutine(_rotationCoroutine);
+            
+            if (_rotationCoroutine != null)
+                StopCoroutine(_rotationCoroutine);
         }
 
-        public void SetPosition(Vector3 position)
-        {
-            _transform.position = position;
-        }
-
-        public void SetRotation(Quaternion rotation)
-        {
-            _transform.rotation = rotation;
-        }
-
-        public void SetLevel(int level)
-        {
-            _level = level;
-        }
-
-        public int GetDamage()
-        {
-            return _damage;
-        }
-
-        public int GetReward()
-        {
-            return _reward;
-        }
-
-        public Vector3 GetPosition()
-        {
-            //if (_transform == null)
-            //    return 10000 * Vector3.one;
-
-            return _transform.position;
-        }
-
-        public void ApplyDamage(float amount)
-        {
-            _health -= amount;
-
-            if (_health <= 0)
-                Died(this);
-        }
     }
 }
 

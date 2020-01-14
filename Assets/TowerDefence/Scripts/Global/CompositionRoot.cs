@@ -40,6 +40,42 @@ namespace TowerDefence
         public event Action<int> GoldChanged = (v) => { };
         public event Action<int> HealthChanged = (v) => { };
 
+        private bool _isPlaying = false;
+        private event Action _playGame;
+        private event Action _stopGame;
+
+        public event Action PlayGame
+        {
+            add
+            {
+                if (_isPlaying)
+                    value();
+
+                _playGame += value;
+            }
+
+            remove
+            {
+                _playGame -= value;
+            }
+        }
+
+        public event Action StopGame
+        {
+            add
+            {
+                if (_isPlaying == false)
+                    value();
+
+                _stopGame += value;
+            }
+
+            remove
+            {
+                _stopGame -= value;
+            }
+        }
+
         public void InvokeEnemyKilled(IEnemy enemy)
         {
             EnemyKilled(enemy);
@@ -58,6 +94,18 @@ namespace TowerDefence
         public void InvokeHealthChanged(int value)
         {
             HealthChanged(value);
+        }
+
+        public void InvokePlayGame()
+        {
+            _isPlaying = true;
+            _playGame();
+        }
+
+        public void InvokeStopGame()
+        {
+            _isPlaying = false;
+            _stopGame();
         }
     }
 }
