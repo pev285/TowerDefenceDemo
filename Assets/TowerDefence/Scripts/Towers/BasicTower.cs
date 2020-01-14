@@ -13,6 +13,7 @@ namespace TowerDefence.Towers
     {
         private const float LaserBeamDuration = 0.1f;
 
+        public event Action CharacteristicsUpdated = () => { };
         public event Action<ITower> UpgradeRequired = (t) => { };
 
         [SerializeField]
@@ -174,8 +175,6 @@ namespace TowerDefence.Towers
         {
             _level++;
             Configure();
-
-            Debug.Log($"Tower upgraded. New level is {_level}");
         }
 
         private void Configure()
@@ -186,6 +185,8 @@ namespace TowerDefence.Towers
             _damage = config.Damage + _level * config.DamageIncrement;
             _fireInterval = 1.0f / (config.Frequency + _level * config.FrequencyIncrement);
             _upgradePrice = config.UpgradePrice + _level * config.UpgradePreceIncrement;
+
+            CharacteristicsUpdated();
         }
 
 
