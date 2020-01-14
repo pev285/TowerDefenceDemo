@@ -37,27 +37,27 @@ namespace TowerDefence
         public event Action<IEnemy> EnemyKilled = (e) => { };
         public event Action StrongholdDestroyed = () => { };
 
-        public event Action<int> StrongholdGoldChanged = (v) => { };
-        public event Action<int> StrongholdHealthChanged = (v) => { };
+        public event Action<int> GoldChanged = (v) => { };
+        public event Action<int> HealthChanged = (v) => { };
 
         public void InvokeEnemyKilled(IEnemy enemy)
         {
             EnemyKilled(enemy);
         }
 
-        public void InvokeStrongholdDestroyed()
+        public void InvokeDestroyed()
         {
             StrongholdDestroyed();
         }
 
-        public void InvokeStrongholdGoldChanged(int value)
+        public void InvokeGoldChanged(int value)
         {
-            StrongholdGoldChanged(value);
+            GoldChanged(value);
         }
 
-        public void InvokeStrongholdHealthChanged(int value)
+        public void InvokeHealthChanged(int value)
         {
-            StrongholdHealthChanged(value);
+            HealthChanged(value);
         }
     }
 }

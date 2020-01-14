@@ -22,12 +22,14 @@ namespace TowerDefence.UI
         {
             var root = Root.Instance;
 
+            root.GoldChanged += UpdateUI;
+            root.HealthChanged += UpdateUI;
             root.StrongholdDestroyed += ShowEndgameUI;
-            root.StrongholdGoldChanged += UpdateGoldUI;
-            root.StrongholdHealthChanged += UpdateHealthUI;
 
 
             _RestartButton.onClick.AddListener(RestartButtonClickedListener);
+
+            UpdateUI();
             ShowGameUI();
         }
 
@@ -38,9 +40,16 @@ namespace TowerDefence.UI
             if (root == null)
                 return;
 
-            root.StrongholdDestroyed += ShowEndgameUI;
-            root.StrongholdGoldChanged += UpdateGoldUI;
-            root.StrongholdHealthChanged += UpdateHealthUI;
+            root.GoldChanged -= UpdateUI;
+            root.HealthChanged -= UpdateUI;
+            root.StrongholdDestroyed -= ShowEndgameUI;
+
+            _RestartButton.onClick.RemoveListener(RestartButtonClickedListener);
+        }
+
+        private void UpdateUI(int value)
+        {
+            UpdateUI();
         }
 
         private void RestartButtonClickedListener()
@@ -54,23 +63,23 @@ namespace TowerDefence.UI
             _endgameUI.SetActive(false);
         }
 
-        private void UpdateHealthUI(int health)
-        {
-            Debug.Log($"::UI:: health = {health}");
-        }
-
-        private void UpdateGoldUI(int gold)
-        {
-            //Debug.Log($"::UI:: gold = {gold}");
-        }
-
         private void ShowEndgameUI()
         {
+            var defeated = Root.Instance.Context.EnemiesDefeated;
+
             _gameUI.SetActive(false);
             _endgameUI.SetActive(true);
 
-            Debug.Log($"::UI:: End of the Game");
+            Debug.Log($"::UI:: End of the Game, enemied={defeated}");
         }
+
+        private void UpdateUI()
+        {
+            var context = Root.Instance.Context;
+
+            Debug.Log($"::UI:: gold = {context.Gold}, health = {context.Health}");
+        }
+
     }
 }
 

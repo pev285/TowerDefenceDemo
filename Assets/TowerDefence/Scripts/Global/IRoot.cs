@@ -13,8 +13,8 @@ namespace TowerDefence
 		event Action<IEnemy> EnemyKilled;
 		event Action StrongholdDestroyed;
 
-		event Action<int> StrongholdGoldChanged;
-		event Action<int> StrongholdHealthChanged;
+		event Action<int> GoldChanged;
+		event Action<int> HealthChanged;
 
 		IGameContext Context { get; }
 		IConfiguration Configuration { get; }

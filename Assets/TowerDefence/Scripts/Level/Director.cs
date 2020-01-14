@@ -25,18 +25,31 @@ namespace TowerDefence.Level
 
 		private void Awake()
 		{
-			_compositionRoot = new CompositionRoot();
-			Root.SetInstance(_compositionRoot);
-
 			_context = new GameContext();
-			_compositionRoot.ObtainContext += GetContext;
+
+			ConfigureComposition();
 
 			Subscribe();
 		}
 
-		private void Start()
+		private void ConfigureComposition()
+		{
+			_compositionRoot = new CompositionRoot();
+			Root.SetInstance(_compositionRoot);
+		}
+
+		private void ConfigureContext()
 		{
 			_context.EnemiesDefeated = 0;
+			var config = Root.Instance.Configuration.GetStrongholdConfiguration();
+
+			_context.Gold = config.StartGold;
+			_context.Health = config.StartHealth;
+		}
+
+		private void Start()
+		{
+			ConfigureContext();
 
 			_spawner.Activate();
 			_stronghold.Activate();
@@ -51,26 +64,30 @@ namespace TowerDefence.Level
 		{
 			_uiManager.RestartButtonDown += ReloadLevel;
 			_spawner.EnemyCreated += SubscribeEnemyEvents;
-
-			_stronghold.Died += PassAlongStrongholdDestroyed;
-			_stronghold.HealthChanged += PassAlognStrongholdHealthChanged;
-			_stronghold.GoldAmountChanged += PassAlongStrongholdGoldChanged;
+			_stronghold.GotDamage += ApplyDamage;
 
 			Root.Instance.StrongholdDestroyed += StopGame;
-			Root.Instance.EnemyKilled += UpdateDefeatedEnemies;
+			Root.Instance.EnemyKilled += CountAndDisposeEnemy;
+
+			_context.HealthChanged += PassAlognStrongholdHealthChanged;
+			_context.GoldAmountChanged += PassAlongStrongholdGoldChanged;
+			_context.StrongholdDestroyed += PassAlongStrongholdDestroyed;
+
+			_compositionRoot.ObtainContext += GetContext;
 		}
 
 		private void Unsubscribe()
 		{
 			_uiManager.RestartButtonDown -= ReloadLevel;
 			_spawner.EnemyCreated -= SubscribeEnemyEvents;
-
-			_stronghold.Died -= PassAlongStrongholdDestroyed;
-			_stronghold.HealthChanged -= PassAlognStrongholdHealthChanged;
-			_stronghold.GoldAmountChanged -= PassAlongStrongholdGoldChanged;
+			_stronghold.GotDamage -= ApplyDamage;
 
 			Root.Instance.StrongholdDestroyed -= StopGame;
-			Root.Instance.EnemyKilled -= UpdateDefeatedEnemies;
+			Root.Instance.EnemyKilled -= CountAndDisposeEnemy;
+
+			_context.HealthChanged -= PassAlognStrongholdHealthChanged;
+			_context.GoldAmountChanged -= PassAlongStrongholdGoldChanged;
+			_context.StrongholdDestroyed -= PassAlongStrongholdDestroyed;
 
 			_compositionRoot.ObtainContext -= GetContext;
 		}
@@ -80,9 +97,19 @@ namespace TowerDefence.Level
 			return _context;
 		}
 
-		private void UpdateDefeatedEnemies(IEnemy enemy)
+		private void ApplyDamage(int damage)
+		{
+			_context.Health -= damage;
+		}
+
+		private void CountAndDisposeEnemy(IEnemy enemy)
 		{
 			_context.EnemiesDefeated++;
+
+			var reward = enemy.GetReward();
+			_context.Gold += reward;
+
+			enemy.Dispose();
 		}
 
 		private void StopGame()
@@ -93,17 +120,17 @@ namespace TowerDefence.Level
 
 		private void PassAlongStrongholdGoldChanged(int gold)
 		{
-			_compositionRoot.InvokeStrongholdGoldChanged(gold);
+			_compositionRoot.InvokeGoldChanged(gold);
 		}
 
 		private void PassAlognStrongholdHealthChanged(int health)
 		{
-			_compositionRoot.InvokeStrongholdHealthChanged(health);
+			_compositionRoot.InvokeHealthChanged(health);
 		}
 
 		private void PassAlongStrongholdDestroyed()
 		{
-			_compositionRoot.InvokeStrongholdDestroyed();
+			_compositionRoot.InvokeDestroyed();
 		}
 
 		private void SubscribeEnemyEvents(IEnemy enemy)

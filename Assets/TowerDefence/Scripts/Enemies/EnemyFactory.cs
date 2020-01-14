@@ -15,6 +15,8 @@ namespace TowerDefence.Enemies
         {
             var go = Instantiate(_enemyPrefabs[0]);
             return go.GetComponent<IEnemy>();
+
+            //--- TODO: Use a pool ---
         }
     }
 }

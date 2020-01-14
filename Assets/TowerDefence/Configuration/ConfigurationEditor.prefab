@@ -49,7 +49,7 @@ MonoBehaviour:
       Damage: 2
       Reward: 5
       HealthIncrement: 2
-      DamageIncrement: 1
+      DamageIncrement: 0
       RewardIncrement: 2
       MoveSpeed: 3
       RotationSpeed: 360

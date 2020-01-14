@@ -25,12 +25,12 @@ namespace TowerDefence
             _instance = instance;
         }
 
-        private static IRoot CreateInstance()
-        {
-            return new CompositionRoot();
-            //var go = new GameObject("CompositionRoot");
-            //return go.AddComponent<CompositionRoot>();
-        }
+        //private static IRoot CreateInstance()
+        //{
+        //    return new CompositionRoot();
+        //    //var go = new GameObject("CompositionRoot");
+        //    //return go.AddComponent<CompositionRoot>();
+        //}
     }
 }
 
