@@ -145,9 +145,9 @@ namespace TowerDefence.Towers
         {
             var config = Root.Instance.Configuration.GetTowerConfiguration(TowerType.BasicTower);
 
-            _range = config.Range + _level * config.RangePerLevelIncrement;
-            _damage = config.Damage + _level * config.DamagePerLevelIncrement;
-            _fireInterval = 1.0f / (config.Frequency + _level * config.FrequencyPerLevelIncrement);
+            _range = config.Range + _level * config.RangeIncrement;
+            _damage = config.Damage + _level * config.DamageIncrement;
+            _fireInterval = 1.0f / (config.Frequency + _level * config.FrequencyIncrement);
         }
 
         private void OnMouseDown()

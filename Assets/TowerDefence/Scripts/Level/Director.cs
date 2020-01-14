@@ -20,7 +20,7 @@ namespace TowerDefence.Level
 		[SerializeField]
 		private Stronghold _stronghold;
 
-		private int _killedEnemiesCounter;
+		private GameContext _context;
 		private CompositionRoot _compositionRoot;
 
 		private void Awake()
@@ -28,12 +28,15 @@ namespace TowerDefence.Level
 			_compositionRoot = new CompositionRoot();
 			Root.SetInstance(_compositionRoot);
 
+			_context = new GameContext();
+			_compositionRoot.ObtainContext += GetContext;
+
 			Subscribe();
 		}
 
 		private void Start()
 		{
-			_killedEnemiesCounter = 0;
+			_context.EnemiesDefeated = 0;
 
 			_spawner.Activate();
 			_stronghold.Activate();
@@ -54,12 +57,7 @@ namespace TowerDefence.Level
 			_stronghold.GoldAmountChanged += PassAlongStrongholdGoldChanged;
 
 			Root.Instance.StrongholdDestroyed += StopGame;
-		}
-
-		private void StopGame()
-		{
-			_spawner.Deactivate();
-			_stronghold.Deactivate();
+			Root.Instance.EnemyKilled += UpdateDefeatedEnemies;
 		}
 
 		private void Unsubscribe()
@@ -70,6 +68,27 @@ namespace TowerDefence.Level
 			_stronghold.Died -= PassAlongStrongholdDestroyed;
 			_stronghold.HealthChanged -= PassAlognStrongholdHealthChanged;
 			_stronghold.GoldAmountChanged -= PassAlongStrongholdGoldChanged;
+
+			Root.Instance.StrongholdDestroyed -= StopGame;
+			Root.Instance.EnemyKilled -= UpdateDefeatedEnemies;
+
+			_compositionRoot.ObtainContext -= GetContext;
+		}
+
+		private IGameContext GetContext()
+		{
+			return _context;
+		}
+
+		private void UpdateDefeatedEnemies(IEnemy enemy)
+		{
+			_context.EnemiesDefeated++;
+		}
+
+		private void StopGame()
+		{
+			_spawner.Deactivate();
+			_stronghold.Deactivate();
 		}
 
 		private void PassAlongStrongholdGoldChanged(int gold)

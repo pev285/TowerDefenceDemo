@@ -7,7 +7,7 @@ namespace TowerDefence.Configuration.Json
 	public class JsonConfigPath : MonoBehaviour 
 	{
 		private const string _fileName = "Configuration.json";
-		private const string _directoryName = "/Configuration/";
+		private const string _directoryName = "/TowerDefence/Configuration/";
 
 		public static string Directory
 		{

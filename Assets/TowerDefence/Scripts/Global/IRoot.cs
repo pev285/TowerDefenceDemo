@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TowerDefence.Configuration;
 using TowerDefence.Enemies;
+using TowerDefence.Level;
 using UnityEngine;
 
 namespace TowerDefence
@@ -15,6 +16,7 @@ namespace TowerDefence
 		event Action<int> StrongholdGoldChanged;
 		event Action<int> StrongholdHealthChanged;
 
+		IGameContext Context { get; }
 		IConfiguration Configuration { get; }
 	
 	} 

@@ -13,12 +13,13 @@ namespace TowerDefence.Configuration
 		public float Frequency;
 
 		[Space(10)]
-		public int UpgradePricePerLevel;
+		public float RangeIncrement;
+		public float DamageIncrement;
+		public float FrequencyIncrement;
 
 		[Space(10)]
-		public float RangePerLevelIncrement;
-		public float DamagePerLevelIncrement;
-		public float FrequencyPerLevelIncrement;
+		public int UpgradePricePerLevel;
+		public int UpgradePreceIncrement;
 	} 
 } 
 

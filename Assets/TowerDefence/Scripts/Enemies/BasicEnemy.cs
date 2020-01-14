@@ -53,12 +53,12 @@ namespace TowerDefence.Enemies
         {
             var config = Root.Instance.Configuration.GetEnemyConfiguration(EnemyType.BasicEnemy);
 
-            _damage = config.Damage + _level * config.DamagePerLevelIncrement;
-            _reward = config.Reward + _level * config.RewardPerLevelIncrement;
-            _health = config.Health + _level * config.HealthPerLevelIncrement;
+            _damage = config.Damage + _level * config.DamageIncrement;
+            _reward = config.Reward + _level * config.RewardIncrement;
+            _health = config.Health + _level * config.HealthIncrement;
 
-            _moveSpeed = config.MoveSpeed + _level * config.MoveSpeedPerLevelIncrement;
-            _rotationSpeed = config.RotationSpeed + _level * config.RotationSpeedPerLevelIncrement;
+            _moveSpeed = config.MoveSpeed + _level * config.MoveSpeedIncrement;
+            _rotationSpeed = config.RotationSpeed + _level * config.RotationSpeedIncrement;
         }
 
 

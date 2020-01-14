@@ -13,17 +13,17 @@ namespace TowerDefence.Configuration
 		public int Reward;
 
 		[Space(5)]
-		public float HealthPerLevelIncrement;
-		public int DamagePerLevelIncrement;
-		public int RewardPerLevelIncrement;
+		public float HealthIncrement;
+		public int DamageIncrement;
+		public int RewardIncrement;
 
 		[Space(10)]
 		public float MoveSpeed;
 		public float RotationSpeed;
 
 		[Space(5)]
-		public float MoveSpeedPerLevelIncrement;
-		public float RotationSpeedPerLevelIncrement;
+		public float MoveSpeedIncrement;
+		public float RotationSpeedIncrement;
 	} 
 } 
 
