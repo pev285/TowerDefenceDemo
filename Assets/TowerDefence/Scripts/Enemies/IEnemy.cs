@@ -9,6 +9,9 @@ namespace TowerDefence.Enemies
 {
     public interface IEnemy : IDisposable
     {
+        bool IsAlive { get; }
+        event Action<IEnemy> Died;
+
         Vector3 GetPosition();
         void ApplyDamage(float amount);
 

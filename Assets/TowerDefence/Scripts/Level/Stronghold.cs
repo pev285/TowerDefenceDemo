@@ -18,10 +18,28 @@ namespace TowerDefence.Level
 
         private bool _isActivated;
 
+        private void Awake()
+        {
+            Deactivate();
+        }
+
         private void Start()
         {
             Configure();
-            _isActivated = false;
+            Root.Instance.EnemyKilled += TakeRewardAndDispose;
+        }
+
+        private void OnDestroy()
+        {
+            Root.Instance.EnemyKilled -= TakeRewardAndDispose;
+        }
+
+        private void TakeRewardAndDispose(IEnemy enemy)
+        {
+            var reward = enemy.GetReward();
+            enemy.Dispose();
+
+            ChangeGold(reward);
         }
 
         public void Activate()

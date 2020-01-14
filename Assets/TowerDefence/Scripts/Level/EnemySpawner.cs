@@ -50,8 +50,6 @@ namespace TowerDefence.Level
 
                 yield return StartCoroutine(WaveCoroutine(waveNumber, spawnInterval, enemiesCount));
                 yield return new WaitForSeconds(waveInterval);
-
-                UpdateEnemiesCharacteristics();
             }
         }
 
@@ -95,13 +93,6 @@ namespace TowerDefence.Level
 
             _spread = config.Spread;
         }
-
-        private void UpdateEnemiesCharacteristics()
-        {
-            //--- TODO --- !!!!!!!!!!!!!!!!!!!!!!!
-        }
-
-
     }
 }
 

@@ -10,7 +10,16 @@ namespace TowerDefence.Enemies
 {
     public class BasicEnemy : MonoBehaviour, IEnemy
     {
-        public event Action Died = () => { };
+        public event Action<IEnemy> Died = (e) => { };
+
+        public bool IsAlive
+        {
+            get
+            {
+                return _transform != null;
+            }
+        }
+
 
         private Transform _transform;
         private Coroutine _rotationCoroutine;
@@ -143,6 +152,9 @@ namespace TowerDefence.Enemies
 
         public Vector3 GetPosition()
         {
+            //if (_transform == null)
+            //    return 10000 * Vector3.one;
+
             return _transform.position;
         }
 
@@ -151,7 +163,7 @@ namespace TowerDefence.Enemies
             _health -= amount;
 
             if (_health <= 0)
-                Died();
+                Died(this);
         }
     }
 }

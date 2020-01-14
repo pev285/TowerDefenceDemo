@@ -375,7 +375,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 1, y: 1e-45, z: 0, w: 7.7e-44}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -749,6 +749,11 @@ PrefabInstance:
       propertyPath: UIManager
       value: 
       objectReference: {fileID: 1725333824}
+    - target: {fileID: 602823250549183619, guid: 8d57955c5dc1fb34386be4b2262409b2,
+        type: 3}
+      propertyPath: _uiManager
+      value: 
+      objectReference: {fileID: 1725333824}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d57955c5dc1fb34386be4b2262409b2, type: 3}
 --- !u!1001 &2019436142083954363
@@ -872,6 +877,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 2113767201744834257, guid: dffd0c2df1ab8a342851859f9aef9e8f,
+        type: 3}
+      propertyPath: _factory
+      value: 
+      objectReference: {fileID: 1068993359}
+    - target: {fileID: 2113767201744834257, guid: dffd0c2df1ab8a342851859f9aef9e8f,
+        type: 3}
+      propertyPath: _tracks.Array.data[0]
+      value: 
+      objectReference: {fileID: 666700989}
     - target: {fileID: 2113767201744834256, guid: dffd0c2df1ab8a342851859f9aef9e8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -927,16 +942,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2113767201744834257, guid: dffd0c2df1ab8a342851859f9aef9e8f,
-        type: 3}
-      propertyPath: _factory
-      value: 
-      objectReference: {fileID: 1068993359}
-    - target: {fileID: 2113767201744834257, guid: dffd0c2df1ab8a342851859f9aef9e8f,
-        type: 3}
-      propertyPath: _tracks.Array.data[0]
-      value: 
-      objectReference: {fileID: 666700989}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dffd0c2df1ab8a342851859f9aef9e8f, type: 3}
 --- !u!1001 &4078924001718755307

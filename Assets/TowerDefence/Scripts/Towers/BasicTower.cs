@@ -60,14 +60,24 @@ namespace TowerDefence.Towers
         private void UpdateEnemy()
         {
             if (_currentEnemy != null)
-                if (Vector3.Distance(_currentEnemy.GetPosition(), _gun.position) > _range)
+            {
+                if (_currentEnemy.IsAlive == false)
+                {
                     _currentEnemy = null;
+                }
+                else
+                {
+                    float enemyDistance = Vector3.Distance(_currentEnemy.GetPosition(), _gun.position);
+                    if (enemyDistance > _range)
+                        _currentEnemy = null;
+                }
+            }
 
             if (_currentEnemy == null)
-                _currentEnemy = FindEnemy();
+                _currentEnemy = FindEnemyInRange();
         }
 
-        private IEnemy FindEnemy()
+        private IEnemy FindEnemyInRange()
         {
             var results = Physics.OverlapSphere(_gun.position, _range, _enemyMask);
             
@@ -80,7 +90,7 @@ namespace TowerDefence.Towers
 
         private void SetGunDirection()
         {
-            if (_currentEnemy == null)
+            if (_currentEnemy == null || _currentEnemy.IsAlive == false)
                 return;
 
             var enemyPosition = _currentEnemy.GetPosition();
