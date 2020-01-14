@@ -35,8 +35,8 @@ namespace TowerDefence.Level
 		{
 			_killedEnemiesCounter = 0;
 
+			_spawner.Activate();
 			_stronghold.Activate();
-			_spawner.StartSpawning();
 		}
 
 		private void OnDestroy()
@@ -52,6 +52,14 @@ namespace TowerDefence.Level
 			_stronghold.Died += PassAlongStrongholdDestroyed;
 			_stronghold.HealthChanged += PassAlognStrongholdHealthChanged;
 			_stronghold.GoldAmountChanged += PassAlongStrongholdGoldChanged;
+
+			Root.Instance.StrongholdDestroyed += StopGame;
+		}
+
+		private void StopGame()
+		{
+			_spawner.Deactivate();
+			_stronghold.Deactivate();
 		}
 
 		private void Unsubscribe()

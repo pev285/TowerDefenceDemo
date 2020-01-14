@@ -9,10 +9,18 @@ namespace TowerDefence.Towers
 {
     public class BasicTower : MonoBehaviour, ITower
     {
+        private const float LaserBeamDuration = 0.1f;
+
         [SerializeField]
         private Transform _gun;
         [SerializeField]
         private LayerMask _enemyMask;
+
+        [Space(10)]
+        [SerializeField]
+        private Transform _firePoint;
+        [SerializeField]
+        private LineRenderer _laserBeam;
 
         private int _level;
 
@@ -22,16 +30,13 @@ namespace TowerDefence.Towers
 
         private bool _isActivated;
 
-        //private Transform _transform;
-
         private IEnemy _currentEnemy;
         private float _timeSinceLastFire;
-        //private TowerConfiguration _config;
 
-        //private void Awake()
-        //{
-        //    _transform = transform;
-        //}
+        private void Awake()
+        {
+            _laserBeam.positionCount = 0;
+        }
 
         private void Start()
         {
@@ -105,9 +110,18 @@ namespace TowerDefence.Towers
             if (_currentEnemy == null)
                 return;
 
-            // --- Draw line ---
-
+            StartCoroutine(ShowBeam(_firePoint.position, _currentEnemy.GetPosition()));
             _currentEnemy.ApplyDamage(_damage);
+        }
+
+        private IEnumerator ShowBeam(Vector3 start, Vector3 end)
+        {
+            _laserBeam.positionCount = 2;
+            _laserBeam.SetPosition(0, start);
+            _laserBeam.SetPosition(1, end);
+
+            yield return new WaitForSeconds(LaserBeamDuration);
+            _laserBeam.positionCount = 0;
         }
 
         public void Activate()
@@ -136,6 +150,10 @@ namespace TowerDefence.Towers
             _fireInterval = 1.0f / (config.Frequency + _level * config.FrequencyPerLevelIncrement);
         }
 
+        private void OnMouseDown()
+        {
+            Debug.Log("Request Upgrade");
+        }
 
 
         private void OnDrawGizmos()

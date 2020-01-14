@@ -23,6 +23,7 @@ namespace TowerDefence.Level
         private int _spread;
 
         private Transform _transform;
+        private Coroutine _spawningCoroutine;
 
         private void Awake()
         {
@@ -34,10 +35,16 @@ namespace TowerDefence.Level
         //    StartSpawning();
         //}
 
-        public void StartSpawning()
+        public void Activate()
         {
             Configure();
-            StartCoroutine(WavesStarterCoroutine(_waveInterval, _spawnInterval, _spread));
+            _spawningCoroutine = StartCoroutine(WavesStarterCoroutine(_waveInterval, _spawnInterval, _spread));
+        }
+
+
+        public void Deactivate()
+        {
+            StopCoroutine(_spawningCoroutine);
         }
 
         private IEnumerator WavesStarterCoroutine(float waveInterval, float spawnInterval, int spread)
