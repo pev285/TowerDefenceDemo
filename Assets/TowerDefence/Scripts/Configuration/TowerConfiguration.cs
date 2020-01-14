@@ -18,7 +18,7 @@ namespace TowerDefence.Configuration
 		public float FrequencyIncrement;
 
 		[Space(10)]
-		public int UpgradePricePerLevel;
+		public int UpgradePrice;
 		public int UpgradePreceIncrement;
 	} 
 } 

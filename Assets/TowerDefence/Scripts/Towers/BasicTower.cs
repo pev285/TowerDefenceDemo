@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TowerDefence.Configuration;
 using TowerDefence.Enemies;
+using TowerDefence.UI;
 using UnityEngine;
 
 
@@ -10,6 +12,8 @@ namespace TowerDefence.Towers
     public class BasicTower : MonoBehaviour, ITower
     {
         private const float LaserBeamDuration = 0.1f;
+
+        public event Action<ITower> UpgradeRequired = (t) => { };
 
         [SerializeField]
         private Transform _gun;
@@ -22,11 +26,17 @@ namespace TowerDefence.Towers
         [SerializeField]
         private LineRenderer _laserBeam;
 
+        [Space(10)]
+        [SerializeField]
+        private MouseRegistrator _mouseInteraction;
+
         private int _level;
 
         private float _range;
         private float _damage;
         private float _fireInterval;
+
+        private int _upgradePrice;
 
         private bool _isActivated;
 
@@ -42,10 +52,20 @@ namespace TowerDefence.Towers
 
         private void Start()
         {
+            _mouseInteraction.MouseDown += RequestUpgrade;
+
             Root.Instance.PlayGame += Activate;
             Root.Instance.StopGame += Deactivate;
 
             _level = 0;
+        }
+
+        private void OnDestroy()
+        {
+            _mouseInteraction.MouseDown -= RequestUpgrade;
+
+            Root.Instance.PlayGame -= Activate;
+            Root.Instance.StopGame -= Deactivate;
         }
 
         private void Update()
@@ -65,6 +85,12 @@ namespace TowerDefence.Towers
 
             _timeSinceLastFire = 0;
         }
+
+        private void RequestUpgrade()
+        {
+            UpgradeRequired(this);
+        }
+
 
         private void UpdateEnemy()
         {
@@ -139,10 +165,17 @@ namespace TowerDefence.Towers
             _isActivated = false;
         }
 
+        public int GetUpgradePrice()
+        {
+            return _upgradePrice;
+        }
+
         public void Upgrade()
         {
             _level++;
             Configure();
+
+            Debug.Log($"Tower upgraded. New level is {_level}");
         }
 
         private void Configure()
@@ -152,12 +185,9 @@ namespace TowerDefence.Towers
             _range = config.Range + _level * config.RangeIncrement;
             _damage = config.Damage + _level * config.DamageIncrement;
             _fireInterval = 1.0f / (config.Frequency + _level * config.FrequencyIncrement);
+            _upgradePrice = config.UpgradePrice + _level * config.UpgradePreceIncrement;
         }
 
-        private void OnMouseDown()
-        {
-            Debug.Log("Request Upgrade");
-        }
 
 
         private void OnDrawGizmos()
@@ -165,7 +195,6 @@ namespace TowerDefence.Towers
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, _range);
         }
-
     }
 }
 

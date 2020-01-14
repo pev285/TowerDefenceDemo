@@ -8,6 +8,7 @@ namespace TowerDefence.Towers
     public interface ITower
     {
         void Upgrade();
+        int GetUpgradePrice();
     }
 }
 

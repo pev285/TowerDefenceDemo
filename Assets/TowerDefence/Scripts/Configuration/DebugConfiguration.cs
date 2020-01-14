@@ -42,7 +42,7 @@ namespace TowerDefence.Configuration
 				DamageIncrement = 1,
 				FrequencyIncrement = 1f,
 
-				UpgradePricePerLevel = 50,
+				UpgradePrice = 50,
 			};
 
 			StrongholdConfig = new StrongholdConfiguration

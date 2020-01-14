@@ -51,6 +51,7 @@ MonoBehaviour:
     m_Bits: 256
   _firePoint: {fileID: 5106565907523143435}
   _laserBeam: {fileID: 6776547785304103801}
+  _mouseInteraction: {fileID: 4770823051360593117}
 --- !u!1 &1325310673492754692
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +312,7 @@ GameObject:
   - component: {fileID: 5706468741091315185}
   - component: {fileID: 7037041975855518395}
   - component: {fileID: 7821896556708486364}
+  - component: {fileID: 4770823051360593117}
   m_Layer: 0
   m_Name: GunBase
   m_TagString: Untagged
@@ -392,6 +394,18 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4770823051360593117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7456650500620371391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791720f1f61da7842bfd33d31991275c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8419690366347368889
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TowerDefence.Enemies;
+using TowerDefence.Towers;
 using TowerDefence.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,6 +21,9 @@ namespace TowerDefence.Level
 		[SerializeField]
 		private Stronghold _stronghold;
 
+		[SerializeField]
+		private BasicTower[] _debugTowers;
+
 		private GameContext _context;
 		private CompositionRoot _compositionRoot;
 
@@ -29,13 +33,15 @@ namespace TowerDefence.Level
 
 			ConfigureComposition();
 
+			foreach (var tower in _debugTowers)
+				tower.UpgradeRequired += TryUpgradeTower;
+
 			Subscribe();
 		}
 
 		private void Start()
 		{
 			ConfigureContext();
-
 			_compositionRoot.InvokePlayGame();
 		}
 
@@ -90,6 +96,17 @@ namespace TowerDefence.Level
 
 			_context.Gold = config.StartGold;
 			_context.Health = config.StartHealth;
+		}
+
+		private void TryUpgradeTower(ITower tower)
+		{
+			var price = tower.GetUpgradePrice();
+
+			if (price > _context.Gold)
+				return;
+
+			_context.Gold -= price;
+			tower.Upgrade();
 		}
 
 		private IGameContext GetContext()

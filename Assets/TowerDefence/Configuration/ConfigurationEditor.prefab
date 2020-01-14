@@ -62,8 +62,8 @@ MonoBehaviour:
       RangeIncrement: 1
       DamageIncrement: 1
       FrequencyIncrement: 1
-      UpgradePricePerLevel: 50
-      UpgradePreceIncrement: 10
+      UpgradePrice: 50
+      UpgradePreceIncrement: 30
     SpawnerConfig:
       WaveInterval: 3
       SpawnInterval: 0.5
