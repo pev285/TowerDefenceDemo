@@ -18,8 +18,7 @@ namespace TowerDefence
             get
             {
                 if (_configuration == null)
-                    _configuration = JsonConfigLoader.Load(JsonConfigPath.FilePath);
-                //_configuration = new DebugConfiguration();
+                    LoadConfiguration();
 
                 return _configuration;
             }
@@ -41,8 +40,8 @@ namespace TowerDefence
         public event Action<int> HealthChanged = (v) => { };
 
         private bool _isPlaying = false;
-        private event Action _playGame;
-        private event Action _stopGame;
+        private event Action _playGame = () => { };
+        private event Action _stopGame = () => { };
 
         public event Action PlayGame
         {
@@ -106,6 +105,12 @@ namespace TowerDefence
         {
             _isPlaying = false;
             _stopGame();
+        }
+
+        private void LoadConfiguration()
+        {
+            //_configuration = new DebugConfiguration();
+            _configuration = ConfigLoader.Load();
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace TowerDefence.Configuration.Json
 {
-	[CustomEditor(typeof(JsonConfigHolder))]
+	[CustomEditor(typeof(ConfigHolder))]
 	public class JsonConfigHolderEditor : Editor
 	{
 		private const string ConfigPropertyName = "Config";
@@ -33,25 +33,25 @@ namespace TowerDefence.Configuration.Json
 
 		private void Save()
 		{
-			var configHolder = _configHolder.serializedObject.targetObject as JsonConfigHolder;
+			var configHolder = _configHolder.serializedObject.targetObject as ConfigHolder;
 			var config = configHolder.Config;
 
 			var json = JsonConvert.SerializeObject(config);
+			var directory = ConfigPath.EditorDirectory;
 
-			var directory = JsonConfigPath.Directory;
 			if (Directory.Exists(directory) == false)
 				Directory.CreateDirectory(directory);
 
-			File.WriteAllText(JsonConfigPath.FilePath, json);
+			File.WriteAllText(ConfigPath.EditorFilePath, json);
 			AssetDatabase.Refresh();
 		}
 
 		private void Load()
 		{
-			var json = File.ReadAllText(JsonConfigPath.FilePath);
+			var json = File.ReadAllText(ConfigPath.EditorFilePath);
 			var config = JsonConvert.DeserializeObject<OverallConfiguration>(json);
 
-			var configHolder = _configHolder.serializedObject.targetObject as JsonConfigHolder;
+			var configHolder = _configHolder.serializedObject.targetObject as ConfigHolder;
 			configHolder.Config = config;
 		}
 	} 

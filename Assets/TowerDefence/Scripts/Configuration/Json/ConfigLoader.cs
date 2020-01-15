@@ -7,11 +7,15 @@ using UnityEngine;
 
 namespace TowerDefence.Configuration.Json
 {
-	public class JsonConfigLoader : MonoBehaviour 
+	public class ConfigLoader : MonoBehaviour 
 	{
-		public static IConfiguration Load(string path)
+		public static IConfiguration Load()
 		{
-			var filePath = JsonConfigPath.FilePath;
+#if UNITY_EDITOR
+			var filePath = ConfigPath.EditorFilePath;
+#else
+			var filePath = ConfigPath.BuildFilePath;
+#endif
 
 			try
 			{
@@ -22,8 +26,9 @@ namespace TowerDefence.Configuration.Json
 			}
 			catch(Exception e)
 			{
-				return null;
+				return new OverallConfiguration();
 			}
+
 		}
 	} 
 } 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace TowerDefence.Configuration.Json
 {
-	public class JsonConfigHolder : MonoBehaviour 
+	public class ConfigHolder : MonoBehaviour 
 	{
 		public OverallConfiguration Config;
 	}
