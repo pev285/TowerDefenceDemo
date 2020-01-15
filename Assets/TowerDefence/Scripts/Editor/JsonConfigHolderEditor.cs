@@ -36,7 +36,7 @@ namespace TowerDefence.Configuration.Json
 			var configHolder = _configHolder.serializedObject.targetObject as ConfigHolder;
 			var config = configHolder.Config;
 
-			var json = JsonConvert.SerializeObject(config);
+			var json = JsonTool.Serialize(config);
 			var directory = ConfigPath.EditorDirectory;
 
 			if (Directory.Exists(directory) == false)
@@ -49,7 +49,7 @@ namespace TowerDefence.Configuration.Json
 		private void Load()
 		{
 			var json = File.ReadAllText(ConfigPath.EditorFilePath);
-			var config = JsonConvert.DeserializeObject<OverallConfiguration>(json);
+			var config = JsonTool.Deserialize<OverallConfiguration>(json);
 
 			var configHolder = _configHolder.serializedObject.targetObject as ConfigHolder;
 			configHolder.Config = config;

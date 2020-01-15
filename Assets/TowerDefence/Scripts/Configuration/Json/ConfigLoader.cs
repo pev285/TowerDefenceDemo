@@ -20,7 +20,7 @@ namespace TowerDefence.Configuration.Json
 			try
 			{
 				var json = File.ReadAllText(filePath);
-				var config = JsonConvert.DeserializeObject<OverallConfiguration>(json);
+				var config = JsonTool.Deserialize<OverallConfiguration>(json); 
 
 				return config;
 			}
