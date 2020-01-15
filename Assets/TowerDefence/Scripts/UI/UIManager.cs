@@ -11,9 +11,9 @@ namespace TowerDefence.UI
         public event Action RestartButtonDown = () => { };
 
         [SerializeField]
-        private GameObject _gameUI;
+        private GameUI _gameUI;
         [SerializeField]
-        private GameObject _endgameUI;
+        private EndgameUI _endgameUI;
 
         [SerializeField]
         private Button _RestartButton;
@@ -22,14 +22,14 @@ namespace TowerDefence.UI
         {
             var root = Root.Instance;
 
-            root.GoldChanged += UpdateUI;
-            root.HealthChanged += UpdateUI;
+            root.GoldChanged += UpdateGameUI;
+            root.HealthChanged += UpdateGameUI;
             root.StrongholdDestroyed += ShowEndgameUI;
 
 
             _RestartButton.onClick.AddListener(RestartButtonClickedListener);
 
-            UpdateUI();
+            UpdateGameUI();
             ShowGameUI();
         }
 
@@ -40,16 +40,16 @@ namespace TowerDefence.UI
             if (root == null)
                 return;
 
-            root.GoldChanged -= UpdateUI;
-            root.HealthChanged -= UpdateUI;
+            root.GoldChanged -= UpdateGameUI;
+            root.HealthChanged -= UpdateGameUI;
             root.StrongholdDestroyed -= ShowEndgameUI;
 
             _RestartButton.onClick.RemoveListener(RestartButtonClickedListener);
         }
 
-        private void UpdateUI(int value)
+        private void UpdateGameUI(int value)
         {
-            UpdateUI();
+            UpdateGameUI();
         }
 
         private void RestartButtonClickedListener()
@@ -59,25 +59,26 @@ namespace TowerDefence.UI
 
         private void ShowGameUI()
         {
-            _gameUI.SetActive(true);
-            _endgameUI.SetActive(false);
+            UpdateGameUI();
+            _gameUI.gameObject.SetActive(true);
+            _endgameUI.gameObject.SetActive(false);
         }
 
         private void ShowEndgameUI()
         {
             var defeated = Root.Instance.Context.EnemiesDefeated;
+            _endgameUI.EnemiesDefeatedText.text = defeated.ToString();
 
-            _gameUI.SetActive(false);
-            _endgameUI.SetActive(true);
-
-            Debug.Log($"::UI:: End of the Game, enemied={defeated}");
+            _gameUI.gameObject.SetActive(false);
+            _endgameUI.gameObject.SetActive(true);
         }
 
-        private void UpdateUI()
+        private void UpdateGameUI()
         {
             var context = Root.Instance.Context;
 
-            Debug.Log($"::UI:: gold = {context.Gold}, health = {context.Health}");
+            _gameUI.GoldValueText.text = context.Gold.ToString();
+            _gameUI.HealthValueText.text = context.Health.ToString();
         }
 
     }
